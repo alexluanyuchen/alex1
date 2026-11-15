@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI作文智能批改器</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#f3f5fa;color:#202536;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+    main{max-width:850px;margin:25px auto;padding:16px}
+    .panel{background:white;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px #18264a0c}
+    h1{font-size:25px;margin:4px 0 8px}
+    h2{font-size:19px;margin:0 0 14px}
+    .muted{color:#778097;font-size:13px}
+    label{display:block;font-weight:600;margin:14px 0 7px}
+    select,textarea,input{width:100%;border:1px solid #dce1eb;border-radius:10px;padding:12px;font-size:16px;background:white}
+    textarea{min-height:220px;line-height:1.8;resize:vertical}
+    button{width:100%;border:0;border-radius:12px;padding:15px;background:#315eea;color:white;font-size:17px;font-weight:700;margin-top:14px}
+    button:disabled{opacity:.55}
+    .result{line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+    .score{font-size:34px;font-weight:800;color:#315eea}
+    .item{padding:12px;background:#f5f7fc;border-radius:10px;margin:9px 0}
+    .item b{display:block;margin-bottom:5px}
+    .tag{display:inline-block;background:#eaf0ff;color:#315eea;padding:4px 9px;border-radius:20px;font-size:12px}
+    .error{color:#c0392b}
+    .hidden{display:none}
+    @media(max-width:600px){main{padding:10px;margin:10px auto}.panel{padding:16px}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="panel">
+    <span class="tag">AI WRITING COACH 2.0</span>
+    <h1>AI作文智能批改器</h1>
+    <p class="muted">深度评价 · 参考评分 · 逐句修改 · 智能改写</p>
+
+    <label for="grade">年级</label>
+    <select id="grade">
+      <option>初三</option><option>初二</option><option>初一</option>
+      <option>高一</option><option>高二</option><option>高三</option>
+    </select>
+
+    <label for="genre">作文类型</label>
+    <select id="genre">
+      <option>记叙文</option><option>议论文</option><option>材料作文</option>
+      <option>半命题作文</option><option>其他</option>
+    </select>
+
+    <label for="topic">作文题目</label>
+    <input id="topic" placeholder="请输入作文题目">
+
+    <label for="essay">作文正文</label>
+    <textarea id="essay" placeholder="把你的作文粘贴到这里……"></textarea>
+    <p class="muted" id="wordCount">0 字</p>
+
+    <button id="reviewBtn" onclick="reviewEssay()">开始AI批改</button>
+    <p class="muted">评分仅供学习参考，不代表正式考试成绩。</p>
+  </section>
+
+  <section id="loading" class="panel hidden">
+    <h2>AI正在认真阅读你的作文……</h2>
+    <p class="muted">请稍等片刻，不要关闭页面。</p>
+  </section>
+
+  <section id="results" class="hidden">
+    <div class="panel">
+      <h2>综合评价</h2>
+      <div id="summary" class="result"></div>
+      <div id="totalScore" class="score"></div>
+      <p class="muted">满分60分的AI参考评分</p>
+      <div id="scores"></div>
+    </div>
+
+    <div class="panel">
+      <h2>作文优点</h2>
+      <div id="strengths"></div>
+    </div>
+
+    <div class="panel">
+      <h2>主要问题</h2>
+      <div id="issues"></div>
+    </div>
+
+    <div class="panel">
+      <h2>逐句修改建议</h2>
+      <div id="edits"></div>
+    </div>
+
+    <div class="panel">
+      <h2>AI优化后的完整作文</h2>
+      <div id="rewrite" class="result"></div>
+          <button onclick="copyRewrite()">复制修改版作文</button>
+    </div>
+
+    <div class="panel">
+      <h2>下一步提分建议</h2>
+      <div id="nextSteps"></div>
+    </div>
+  </section>
+</main>
+<script src="./app.js"></script>
+</body>
+</html>
